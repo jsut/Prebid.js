@@ -8,12 +8,9 @@ const CONFIG_ENABLED = 'enabled';
 const IAB_VIEWABLE_TIME = 1000;
 const IAB_VIEWABLE_THRESHOLD = 0.5
 
-let CLIENT_SUPPORTS_IO = false;
+const CLIENT_SUPPORTS_IO = window.IntersectionObserver && window.IntersectionObserverEntry && window.IntersectionObserverEntry.prototype &&
+    'intersectionRatio' in window.IntersectionObserverEntry.prototype;
 
-if (window.IntersectionObserver && window.IntersectionObserverEntry && window.IntersectionObserverEntry.prototype &&
-    'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
-  CLIENT_SUPPORTS_IO = true;
-}
 // options for the iO that fires when the ad is viewed.  This one has no root margin, and a threshold of 1,
 // because we only want it to fire when the entire ad placement has come into view.  This might actually be too
 // aggressive, because ads that are obscured, possibly by the edge of a browser if you're too narrow or something
