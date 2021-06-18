@@ -27,7 +27,6 @@ let markViewed = (bid, entry, observer) => {
   return () => {
     observer.unobserve(entry.target);
     events.emit(EVENTS.BID_VIEWABLE, bid);
-    entry.target.style.outline = 'green solid 5px';
     logMessage(entry.target.getAttribute('id') + ' was viewed'); // TODO: should use something from bid here rather than the id probably
   }
 }
@@ -43,8 +42,7 @@ let viewCallbackFactory = (bid) => {
   return (entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        logMessage('start watching view time'); // TODO: watching bid time on what?
-        entry.target.style.outline = 'yellow solid 5px';
+        logMessage('start watching view time ad with id ' + bid.adUnitCode); // TODO: watching bid time on what?
         entry.target.view_tracker = setTimeout(markViewed(bid, entry, observer), IAB_VIEWABLE_TIME);
       } else {
         logMessage(entry.target.getAttribute('id') + ' is out of view'); // TODO: use bid here too probably
